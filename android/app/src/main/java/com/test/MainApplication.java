@@ -21,8 +21,7 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      List<ReactPackage> packages = new ArrayList<>();
-      packages.addAll(PackageList.getPackages());
+      List<ReactPackage> packages = new ArrayList<>(PackageList.getPackages());
       packages.add(
           new LocalPackage()
       );
