@@ -97,15 +97,13 @@ class ReactNativeBuildPlugin implements Plugin<Project> {
             if (androidConfig != null) {
                 String androidSourceDir = androidConfig["sourceDir"]
                 HashMap reactNativeModuleConfig = new HashMap<String, String>()
-
                 reactNativeModuleConfig.put("name", name)
                 reactNativeModuleConfig.put("packageImportPath", androidConfig["packageImportPath"])
                 reactNativeModuleConfig.put("packageInstance", androidConfig["packageInstance"])
                 reactNativeModuleConfig.put("path", path)
                 reactNativeModuleConfig.put("androidSourceDir", androidSourceDir)
                 reactNativeModules.add(reactNativeModuleConfig)
-            } else {
-                println "RN: Ignoring 'null' React Native module: ${name}"
+                println "Adding React Native module: ${name}"
             }
         }
 

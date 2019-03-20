@@ -25,7 +25,6 @@ class ReactNativeSettingsPlugin implements Plugin<DefaultSettings> {
     void addReactNativeModules() {
         reactNativeModules.forEach { reactNativeModule ->
             String name = reactNativeModule["name"]
-            println "RN: 112121212 ${name}"
             String androidSourceDir = reactNativeModule["androidSourceDir"]
             defaultSettings.include(":${name}")
             defaultSettings.project(":${name}").projectDir = new File("${androidSourceDir}")
@@ -57,8 +56,6 @@ class ReactNativeSettingsPlugin implements Plugin<DefaultSettings> {
                 reactNativeModuleConfig.put("path", path)
                 reactNativeModuleConfig.put("androidSourceDir", androidSourceDir)
                 reactNativeModules.add(reactNativeModuleConfig)
-            } else {
-                println "RN: Ignoring 'null' React Native module: ${name}"
             }
         }
 
