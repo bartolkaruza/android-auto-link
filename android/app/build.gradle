@@ -141,6 +141,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
 
@@ -150,5 +151,6 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
 
 apply from: file("../auto_modules.gradle")
