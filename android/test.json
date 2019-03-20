@@ -2,7 +2,7 @@
   {
     "config": {
       "android": {
-        "sourceDir": "/Users/bartolkaruza/dev/proj/oss/temp/Test/node_modules/react-native-webview/android",
+        "sourceDir": "/Volumes/Projects/react-native-oss/android-auto-link/node_modules/react-native-webview/android",
         "packageImportPath": "import com.reactnativecommunity.webview.RNCWebViewPackage;",
         "packageInstance": "new RNCWebViewPackage()"
       }
