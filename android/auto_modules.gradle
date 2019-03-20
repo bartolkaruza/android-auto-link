@@ -1,0 +1,116 @@
+def generatedSrcDir = new File(buildDir, "generated/rn/src/main/java/com/facebook/react")
+
+def generatePackagesFile(File genDir) {
+
+    def package1 = new HashMap()
+    package1.put("packageImportPath", "import com.reactnativecommunity.webview.RNCWebViewPackage;")
+    package1.put("packageInstance", "new RNCWebViewPackage()")
+    List<Map<String, String>>[] libPackages = Arrays.asList(package1)
+
+    def depFile = """
+package com.facebook.react;
+import com.facebook.react.ReactPackage;
+import com.facebook.react.shell.MainReactPackage;
+import java.util.Arrays;
+import java.util.List;
+
+${libPackages.collect { it.packageImportPath }.join(';\\n')}
+
+public class PackageList {
+    
+    public static List<ReactPackage> getPackages () {
+        return Arrays.<ReactPackage>asList(
+          new MainReactPackage(),
+          ${libPackages.collect { it.packageInstance }.join(',')}
+      );
+    }
+
+}
+"""
+
+    def directory = genDir
+    directory.mkdirs()
+    final FileTreeBuilder treeBuilder = new FileTreeBuilder(directory)
+    treeBuilder.file("PackageList.java").newWriter().withWriter { w ->
+        w << depFile
+    }
+}
+
+task generatePackageList << {
+    generatePackagesFile(generatedSrcDir)
+}
+
+preBuild.dependsOn generatePackageList
+
+android {
+    sourceSets {
+        main {
+            java {
+                srcDirs += generatedSrcDir
+            }
+        }
+    }
+}
+
+import groovy.json.JsonSlurper
+
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+
+class ReactNativeBuildPlugin implements Plugin<Project> {
+    private Project project
+    private ArrayList<HashMap<String, String>> reactNativeModules
+//    private static String REACT_NATIVE_CONFIG_CMD = "react-native config"
+    private static String REACT_NATIVE_CONFIG_CMD = "cat ./test.json"
+
+    @Override
+    void apply(Project project) {
+        this.project = project
+        this.reactNativeModules = this.getReactNativeConfig()
+        addReactNativeModules()
+    }
+
+    void addReactNativeModules() {
+        reactNativeModules.forEach { reactNativeModule ->
+            def name = reactNativeModule["name"]
+            project.dependencies {
+                implementation project(path: ":${name}")
+            }
+        }
+    }
+
+    // TODO de-dupe into shared file
+    ArrayList<HashMap<String, String>> getReactNativeConfig() {
+        ArrayList<HashMap<String, String>> reactNativeModules = new ArrayList<HashMap<String, String>>()
+
+        def cmdProcess = REACT_NATIVE_CONFIG_CMD.execute()
+        def reactNativeConfigOutput = cmdProcess.in.text
+
+        def json = new JsonSlurper().parseText(reactNativeConfigOutput)
+
+        json.forEach { value ->
+            String name = value["name"]
+            String path = value["path"]
+            def config = value["config"]
+            def androidConfig = config["android"]
+
+            if (androidConfig != null) {
+                String androidSourceDir = androidConfig["sourceDir"]
+                HashMap reactNativeModuleConfig = new HashMap<String, String>()
+
+                reactNativeModuleConfig.put("name", name)
+                reactNativeModuleConfig.put("packageImportPath", androidConfig["packageImportPath"])
+                reactNativeModuleConfig.put("packageInstance", androidConfig["packageInstance"])
+                reactNativeModuleConfig.put("path", path)
+                reactNativeModuleConfig.put("androidSourceDir", androidSourceDir)
+                reactNativeModules.add(reactNativeModuleConfig)
+            } else {
+                println "RN: Ignoring 'null' React Native module: ${name}"
+            }
+        }
+
+        return reactNativeModules
+    }
+}
+
+apply plugin: ReactNativeBuildPlugin

@@ -1,0 +1,20 @@
+[
+  {
+    "config": {
+      "android": {
+        "sourceDir": "/Users/bartolkaruza/dev/proj/oss/temp/Test/node_modules/react-native-webview/android",
+        "packageImportPath": "import com.reactnativecommunity.webview.RNCWebViewPackage;",
+        "packageInstance": "new RNCWebViewPackage()"
+      }
+    },
+
+    "name": "react-native-webview"
+  },
+  {
+    "config": {
+      "android": null
+    },
+    "path": "",
+    "name": "react-native-foobar"
+  }
+]

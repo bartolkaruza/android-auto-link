@@ -1,0 +1,4 @@
+rootProject.name = 'Test'
+apply from: file("./auto_settings.gradle")
+
+include ':app'
