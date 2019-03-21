@@ -153,4 +153,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 
-apply from: file("../auto_modules.gradle")
+apply from: file("../native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

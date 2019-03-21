@@ -1,4 +1,3 @@
 rootProject.name = 'Test'
-apply from: file("./auto_settings.gradle")
-
+apply from: file("./native_modules.gradlee"); applyNativeModulesSettingsGradle(settings)
 include ':app'
