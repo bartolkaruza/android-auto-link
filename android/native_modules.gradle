@@ -136,6 +136,7 @@ class ReactNativeAutoModules {
     def cmdProcess = Runtime.getRuntime().exec(REACT_NATIVE_CONFIG_CMD, null, getReactNativeProjectRoot())
     def reactNativeConfigOutput = cmdProcess.in.text
 
+    // TODO(salakar): validate output to provide better user warnings/errors, e.g. detect if `react-native` exists, or cli version contains the config command
     def json = new JsonSlurper().parseText(reactNativeConfigOutput)
 
     json.forEach { value ->
