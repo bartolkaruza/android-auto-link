@@ -23,8 +23,6 @@ public class PackageList {
 
 class ReactNativeAutoModules {
   private Project project
-  private Settings settings
-  private ProjectDescriptor rootProject
   private DefaultSettings defaultSettings
   private ArrayList<HashMap<String, String>> reactNativeModules
   private static String REACT_NATIVE_CONFIG_CMD = "cat ./test.json"
@@ -36,8 +34,6 @@ class ReactNativeAutoModules {
    */
   void applySettingsGradle(DefaultSettings defaultSettings) {
     this.defaultSettings = defaultSettings
-    this.settings = defaultSettings.settings
-    this.rootProject = defaultSettings.rootProject
     this.reactNativeModules = this.getReactNativeConfig()
     addReactNativeModuleProjects()
   }
