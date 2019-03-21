@@ -1,20 +1,20 @@
-[
-  {
-    "config": {
-      "android": {
-        "sourceDir": "/Volumes/Projects/react-native-oss/android-auto-link/node_modules/react-native-webview/android",
-        "packageImportPath": "import com.reactnativecommunity.webview.RNCWebViewPackage;",
-        "packageInstance": "new RNCWebViewPackage()"
-      }
-    },
-
-    "name": "react-native-webview"
-  },
-  {
-    "config": {
+{
+  "dependencies": {
+    "react": {
+      "ios": null,
       "android": null
     },
-    "path": "",
-    "name": "react-native-foobar"
-  }
-]
+    "react-native-webview": {
+      "ios": {
+        "podspec": "react-native-webview"
+      },
+      "android": {
+        "packageImportPath": "import com.reactnativecommunity.webview.RNCWebViewPackage;",
+        "packageInstance": "new RNCWebViewPackage()",
+        "sourceDir": "/Volumes/Projects/react-native-oss/android-auto-link/node_modules/react-native-webview/android"
+      }
+    }
+  },
+  "root": "/Volumes/Projects/react-native-oss/android-auto-link",
+  "reactNativePath": "/Volumes/Projects/react-native-oss/android-auto-link/node_modules/react-native"
+}
