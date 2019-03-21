@@ -6,8 +6,9 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import WebView from 'react-native-webview'
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -15,6 +16,7 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <Text>Look ma, no linking!</Text>
+        <WebView style={{ flex: 1 }} source={{ uri: 'https://facebook.com' }}/>
       </View>
     );
   }
